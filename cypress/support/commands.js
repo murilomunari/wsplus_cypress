@@ -10,7 +10,14 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+Cypress.Commands.add('createCategory', (categoryBody) => {
+    return cy.request({
+        method: 'POST',
+        url: 'http://localhost:8080/api/category',
+        failOnStatusCode: false,
+        body: categoryBody
+    });
+});
 //
 //
 // -- This is a child command --
