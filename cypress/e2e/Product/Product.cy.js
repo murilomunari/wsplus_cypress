@@ -37,5 +37,22 @@ describe('Product', () => {
         });
       });
     });
+
+    it('Listando todos os produtos', () => {
+      cy.request({
+        method: 'GET',
+        url: 'http://localhost:8080/api/product',
+        failOnStatusCode: false,
+      }).then((response) => {
+        expect(response.status).to.equal(200);
+        expect(response.body, 'Lista de produtos').to.exist;
+        expect(response.body.length).to.be.greaterThan(0);
+  
+        
+        cy.log('Lista de produtos: ' + JSON.stringify(response.body, null, 2));
+      
+      });
+    });
+
   });
   
