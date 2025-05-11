@@ -18,6 +18,27 @@ Cypress.Commands.add('createCategory', (categoryBody) => {
         body: categoryBody
     });
 });
+
+Cypress.Commands.add('createClient', (clientBody) => {
+    return cy.request({
+        method: 'POST',
+        url: 'http://localhost:8080/api/client',
+        failOnStatusCode: false,
+        body: clientBody
+    });
+});
+
+Cypress.Commands.add('createProduct', (productBody) => {
+    return cy.request({
+        method: 'POST',
+        url: 'http://localhost:8080/api/product',
+        failOnStatusCode: false,
+        body: productBody
+    });
+})
+
+
+
 //
 //
 // -- This is a child command --
