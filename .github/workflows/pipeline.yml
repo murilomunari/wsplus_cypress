@@ -1,0 +1,42 @@
+name: Cypress wsplus API
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  cypress-run:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar o Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17' # ou a versão que você usa
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências do frontend (Cypress)
+        run: npm install
+
+      - name: Buildar o projeto Java
+        run: ./mvnw clean install # ou ./gradlew build
+
+      - name: Subir a API Java
+        run: ./mvnw spring-boot:run & # ou ./gradlew bootRun &
+        env:
+          SERVER_PORT: 8080
+        
+
+      - name: Rodar testes Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          wait-on: 'http://localhost:8080'
+          wait-on-timeout: 60
